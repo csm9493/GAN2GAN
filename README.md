@@ -22,6 +22,7 @@ pip install -r requirements.txt
       ...
 ```
 3) Generate FMD WF dataset for training GAN and GAN2GAN
+
 : Run below ipython files sequentically (you can choice 'data_type' in each ipython file)
 
 ```
@@ -33,6 +34,7 @@ pip install -r requirements.txt
 ```
 
 4) Generate Medical dataset for training GAN and GAN2GAN
+
 : Run below ipython files sequentically (you can choice 'data_type' in each ipython file)
 
 ```
@@ -53,9 +55,11 @@ Download Pretrained weights from [[this google drive link]]()
 
 ## QnA
 ### 1. Where is the code for Smooth Noisy Patch Extraction (Eqn (4) in the paper)?
+
 : Check smooth_area_detector() in './data/Generate_FMD_WF_GAN_train_dataset_96x96.ipynb'
 
 ### 2. How to train GAN and GAN2GAN using custom training dataset?
+
 : You can easily customize ipynb files in './data/' to generate custom training dataset. Note that a lambda (the hyperparameter for controlling the level of homoneousity) for smooth_area_detector() should be selected carefully. My empirical recommendation is to set a lambda that can extract at least 20,000 noise patches.
 
 ## Citation
