@@ -54,12 +54,14 @@ Download Pretrained weights from [[this google drive link]]()
 
 #### Citation
 
+```
 @inproceedings{cha2020gan2gan,
   title={GAN2GAN: Generative Noise Learning for Blind Denoising with Single Noisy Images},
   author={Cha, Sungmin and Park, Taeeon and Kim, Byeongjoon and Baek, Jongduk and Moon, Taesup},
   booktitle={International Conference on Learning Representations},
   year={2020}
 }
+```
 
 #### Reference
 
