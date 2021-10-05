@@ -44,7 +44,9 @@ pip install -r requirements.txt
 ```
 
 ### 3. Train GAN and GAN2GAN
-#### 1) After generating datasets, run train.sh
+#### 1) After generating datasets, run train.sh. It contains scripts to train GAN and GAN2GAN using a specific type of dataset.
+#### 2) If training is done, experimental results for GAN and GAN2GAN will be saved in './result_data/'. You can analyze the experimental results using pre-made ipython files.
+#### 3) Also, all weights will be saved in './weights/'.
 
 ### 4. Evaluate pretrained denoiser by GAN2GAN to test images
 
