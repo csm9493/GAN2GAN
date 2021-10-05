@@ -57,5 +57,5 @@ Download Pretrained weights from [[this google drive link]]()
 
 ## Reference
 
-[1] [A Poisson-Gaussian Denoising Dataset with Real Fluorescence Microscopy Images](https://arxiv.org/abs/1812.10366)
+[1] [[A Poisson-Gaussian Denoising Dataset with Real Fluorescence Microscopy Images]](https://arxiv.org/abs/1812.10366)
 
