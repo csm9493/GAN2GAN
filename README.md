@@ -13,7 +13,6 @@ pip install -r requirements.txt
 ### 2. Prepare Datasets
 
 1) Download FMD(FW)[1] and Medical dataset from [[this google drive link]]()
-
 2) Locate 'Medical_images' and 'Real_FM_images' to './data' directory
 
 ```
@@ -23,8 +22,7 @@ pip install -r requirements.txt
       ...
 ```
 3) Generate FMD WF dataset for training GAN and GAN2GAN
-
-3-1) Run below ipython files sequentically (you can choice 'data_type' in each ipython file)
+: Run below ipython files sequentically (you can choice 'data_type' in each ipython file)
 
 ```
 ./data
@@ -35,8 +33,7 @@ pip install -r requirements.txt
 ```
 
 4) Generate Medical dataset for training GAN and GAN2GAN
-
-4-1) Run below ipython files sequentically (you can choice 'data_type' in each ipython file)
+: Run below ipython files sequentically (you can choice 'data_type' in each ipython file)
 
 ```
 ./data
@@ -47,9 +44,7 @@ pip install -r requirements.txt
 
 ### 3. Train GAN and GAN2GAN
 1) After generating datasets, run train.sh. It contains scripts to train GAN and GAN2GAN using a specific type of dataset.
-
 2) If training is done, experimental results for GAN and GAN2GAN will be saved in './result_data/'. You can analyze the experimental results using pre-made ipython files.
-
 3) Also, all weights will be saved in './weights/'.
 
 ### 4. Evaluate pretrained denoiser by GAN2GAN using custom test images
