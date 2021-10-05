@@ -48,7 +48,7 @@ pip install -r requirements.txt
 #### 2) If training is done, experimental results for GAN and GAN2GAN will be saved in './result_data/'. You can analyze the experimental results using pre-made ipython files.
 #### 3) Also, all weights will be saved in './weights/'.
 
-### 4. Evaluate pretrained denoiser by GAN2GAN to test images
+### 4. Evaluate pretrained denoiser by GAN2GAN using custom test images
 
 Download Pretrained weights from [[this google drive link]]()
 
