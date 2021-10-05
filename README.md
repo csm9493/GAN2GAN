@@ -12,7 +12,7 @@ pip install -r requirements.txt
 
 ### 2. Prepare Datasets
 
-1) Download FMD(FW)[1] and Medical dataset from [[this google drive link]]()
+1) Download FMD[1] and Medical dataset from [[this google drive link]]()
 2) Locate 'Medical_images' and 'Real_FM_images' to './data' directory
 
 ```
