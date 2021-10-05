@@ -1,6 +1,6 @@
 # GAN2GAN
 
-The official code of GAN2GAN: Generative Noise Learning for Blind Denoising with Single Noisy Images (ICLR 2021) [[arxiv]](https://arxiv.org/abs/1905.10488)
+The official code of GAN2GAN: Generative Noise Learning for Blind Denoising with Single Noisy Images (ICLR 2021) [arxiv](https://arxiv.org/abs/1905.10488)
 
 ## Quick Start
 
@@ -52,10 +52,7 @@ pip install -r requirements.txt
 
 Download Pretrained weights from [[this google drive link]]()
 
-```
+#### Reference
 
-
-## Reference
-
-[1] [[A Poisson-Gaussian Denoising Dataset with Real Fluorescence Microscopy Images]](https://arxiv.org/abs/1812.10366)
+[1] [A Poisson-Gaussian Denoising Dataset with Real Fluorescence Microscopy Images](https://arxiv.org/abs/1812.10366)
 
