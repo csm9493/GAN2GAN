@@ -52,7 +52,7 @@ pip install -r requirements.txt
 
 Download Pretrained weights from [[this google drive link]]()
 
-#### Citation
+## Citation
 
 ```
 @inproceedings{cha2020gan2gan,
@@ -63,7 +63,7 @@ Download Pretrained weights from [[this google drive link]]()
 }
 ```
 
-#### Reference
+## Reference
 
 [1] A Poisson-Gaussian Denoising Dataset with Real Fluorescence Microscopy Images [[arxiv]](https://arxiv.org/abs/1812.10366)
 
