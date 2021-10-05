@@ -11,7 +11,7 @@ parser.add_argument('--dataset', type=str, choices=['WF_avg1','WF_avg2','WF_avg4
 parser.add_argument('--seed', default=0, type=int)
 parser.add_argument('--lr', default=0.001, type=float)
 parser.add_argument('--ep', default=50, type=int)
-parser.add_argument('--decay-ep', default=10, type=int)
+parser.add_argument('--decay-ep', default=0.02, type=int)
 parser.add_argument('--mbs', default=64, type=int)
 parser.add_argument('--iter', default=3, type=int)
 parser.add_argument('--patch-size', default=64, type=int)
