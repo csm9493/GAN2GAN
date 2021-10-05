@@ -8,7 +8,7 @@ import numpy as np
 import math
 import scipy.io as sio
 
-from .utils import Dataset_GAN, AverageMeter, ProgressMeter, LambdaLR
+from .utils import Train_Dataset_GAN, AverageMeter, ProgressMeter, LambdaLR
 from .models import Critic, Generator, DnCNN, weights_init_normal, UNet
 
 class Train_Generative_Models():
@@ -25,8 +25,8 @@ class Train_Generative_Models():
             self.g3 = DnCNN(channels=1,output_type='linear')
         else:
             print ('use UNet for g1 and g3')
-            self.g2 = UNet(in_channels=args.input_channel,out_channels=args.input_channel, output_activation = 'sigmoid', residual = True)
-            self.g3 = UNet(in_channels=args.input_channel,out_channels=args.input_channel, output_activation = 'linear', residual = False)
+            self.g2 = UNet(in_channels=args.input_channel,out_channels=args.input_channel, output_activation = 'sigmoid')
+            self.g3 = UNet(in_channels=args.input_channel,out_channels=args.input_channel, output_activation = 'linear')
         
         self.criterion_L1 = torch.nn.L1Loss()
         
@@ -180,6 +180,7 @@ class Train_Generative_Models():
                 ###### Generators g1, g2 and g3 ######
                 self.optimizer_g1.zero_grad()
                 self.optimizer_g2.zero_grad()
+                self.optimizer_g3.zero_grad()
                 
                 # GAN loss
                 n_hat = self.g1(noisev_g2)
