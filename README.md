@@ -12,9 +12,9 @@ pip install -r requirements.txt
 
 ### 2. Prepare Datasets
 
-#### 1) Download FMD(FW)[1] and Medical dataset from [[this google drive link]]()
+1) Download FMD(FW)[1] and Medical dataset from [[this google drive link]]()
 
-#### 2) Locate 'Medical_images' and 'Real_FM_images' to './data' directory
+2) Locate 'Medical_images' and 'Real_FM_images' to './data' directory
 
 ```
 ./data
@@ -22,8 +22,8 @@ pip install -r requirements.txt
       /Real_FM_images 
       ...
 ```
-#### 3) Generate FMD WF dataset for training GAN and GAN2GAN
-##### 3-1) Run below ipython files sequentically (you can choice 'data_type' in each ipython file)
+3) Generate FMD WF dataset for training GAN and GAN2GAN
+3-1) Run below ipython files sequentically (you can choice 'data_type' in each ipython file)
 
 ```
 ./data
@@ -33,8 +33,8 @@ pip install -r requirements.txt
       /Generate_FMD_WF_test_dataset.ipynb
 ```
 
-#### 4) Generate Medical dataset for training GAN and GAN2GAN
-##### 4-1) Run below ipython files sequentically (you can choice 'data_type' in each ipython file)
+4) Generate Medical dataset for training GAN and GAN2GAN
+4-1) Run below ipython files sequentically (you can choice 'data_type' in each ipython file)
 
 ```
 ./data
@@ -44,9 +44,9 @@ pip install -r requirements.txt
 ```
 
 ### 3. Train GAN and GAN2GAN
-#### 1) After generating datasets, run train.sh. It contains scripts to train GAN and GAN2GAN using a specific type of dataset.
-#### 2) If training is done, experimental results for GAN and GAN2GAN will be saved in './result_data/'. You can analyze the experimental results using pre-made ipython files.
-#### 3) Also, all weights will be saved in './weights/'.
+1) After generating datasets, run train.sh. It contains scripts to train GAN and GAN2GAN using a specific type of dataset.
+2) If training is done, experimental results for GAN and GAN2GAN will be saved in './result_data/'. You can analyze the experimental results using pre-made ipython files.
+3) Also, all weights will be saved in './weights/'.
 
 ### 4. Evaluate pretrained denoiser by GAN2GAN using custom test images
 
@@ -54,10 +54,10 @@ Download Pretrained weights from [[this google drive link]]()
 
 ## QnA
 ### 1. Where is the code for Smooth Noisy Patch Extraction (Eqn (4) in the paper)?
-#### : Check smooth_area_detector() in './data/Generate_FMD_WF_GAN_train_dataset_96x96.ipynb'
+: Check smooth_area_detector() in './data/Generate_FMD_WF_GAN_train_dataset_96x96.ipynb'
 
 ### 2. How to train GAN and GAN2GAN using custom training dataset?
-#### : You can easily customize ipynb files in './data/' to generate custom training dataset. Note that a lambda (the hyperparameter for controlling the level of homoneousity) for smooth_area_detector() should be selected carefully. My empirical recommendation is to set a lambda that can extract at least 20,000 noise patches.
+: You can easily customize ipynb files in './data/' to generate custom training dataset. Note that a lambda (the hyperparameter for controlling the level of homoneousity) for smooth_area_detector() should be selected carefully. My empirical recommendation is to set a lambda that can extract at least 20,000 noise patches.
 
 ## Citation
 
