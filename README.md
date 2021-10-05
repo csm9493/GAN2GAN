@@ -1,4 +1,4 @@
-# GAN2GAN
+# GAN2GAN (updaiting..)
 
 The official code of GAN2GAN: Generative Noise Learning for Blind Denoising with Single Noisy Images (ICLR 2021) [[arxiv]](https://arxiv.org/abs/1905.10488)
 
