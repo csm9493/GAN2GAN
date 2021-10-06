@@ -1,5 +1,5 @@
 import argparse
-from core.train_gan2gan import GAN2GAN
+from core.test_denoiser import Test_Denoiser
 
 import torch
 import numpy as np
@@ -11,17 +11,10 @@ parser.add_argument('--dataset', type=str, choices=['WF_avg1','WF_avg2','WF_avg4
                                                    'Gaussian_std15', 'Gaussian_std25', 'Gaussian_std30', 'Gaussian_std50',
                                                    'Mixture_s15', 'Mixture_s25', 'Mixture_s30', 'Mixture_s50',
                                                    'Correlated_std15', 'Correlated_std25'], required=True)
-
 parser.add_argument('--seed', default=0, type=int)
-parser.add_argument('--lr', default=0.001, type=float)
-parser.add_argument('--ep', default=30, type=int)
-parser.add_argument('--decay-ep', default=10, type=int)
-parser.add_argument('--mbs', default=128, type=int)
-parser.add_argument('--iter', default=3, type=int)
-parser.add_argument('--patch-size', default=64, type=int)
+parser.add_argument('--mbs', default=16, type=int)
 parser.add_argument('--input-channel', default=1, type=int)
-parser.add_argument('--print-only-final-ep', action='store_true')
-parser.add_argument('--debug', action='store_true')
+parser.add_argument('--dncnn-b', action='store_true')
 
 args = parser.parse_args()
 
@@ -34,33 +27,54 @@ random.seed(args.seed)
 
 if 'Dose' in args.dataset:
 
-    tr_data = 'G2G_train_120x120_Medical_dataset_'+str(args.dataset)+'.hdf5'
     te_data = 'Medical_dataset_'+str(args.dataset)+'_test.hdf5'
+    
+    if args.dncnn_b:
+        denoiser_path = 'BSD_DnCNN_B_N2C.w'
+    else:
+        denoiser_path = 'Medical_dataset_'+str(args.dataset)+'_UNet_iter_3.w'
         
 elif 'WF' in args.dataset:
     
-    tr_data = 'G2G_train_120x120_FMD_'+str(args.dataset)+'.hdf5'
     te_data = 'FMD_'+str(args.dataset)+'_test.hdf5'
+    
+    if args.dncnn_b:
+        denoiser_path = 'BSD_DnCNN_B_N2C.w'
+    else:
+        denoiser_path = 'FMD_'+str(args.dataset)+'_DnCNN_iter_7.w'
         
 elif 'Gaussian' in args.dataset:
     
-    tr_data = 'G2G_train_120x120_BSD_'+str(args.dataset)+'.hdf5'
     te_data = 'BSD_'+str(args.dataset)+'_test.hdf5'
+    
+    if args.dncnn_b:
+        denoiser_path = 'BSD_DnCNN_B_N2C.w'
+    else:
+        denoiser_path = 'BSD_'+str(args.dataset)+'_DnCNN_iter_3.w'
         
 elif 'Correlated' in args.dataset:
     
-    tr_data = 'G2G_train_120x120_BSD_'+str(args.dataset)+'.hdf5'
     te_data = 'BSD_'+str(args.dataset)+'_test.hdf5'
+    
+    if args.dncnn_b:
+        denoiser_path = 'BSD_DnCNN_B_N2C.w'
+    else:
+        denoiser_path = 'BSD_'+str(args.dataset)+'_DnCNN_iter_3.w'
         
 elif 'Mixture' in args.dataset:
     
-    tr_data = 'G2G_train_120x120_BSD_'+str(args.dataset)+'.hdf5'
     te_data = 'BSD_'+str(args.dataset)+'_test.hdf5'
     
-    
-for i in range(args.iter+1):
-    train_gan = GAN2GAN(args, tr_data, te_data, i)
-    train_gan.train(args)
+    if args.dncnn_b:
+        denoiser_path = 'BSD_DnCNN_B_N2C.w'
+    else:
+        denoiser_path = 'BSD_'+str(args.dataset)+'_DnCNN_iter_3.w'
+
+train_gan = Test_Denoiser(args, te_data, denoiser_path)
+te_loss, psnr, ssim = train_gan.eval()
+
+print('test data: ', te_data, '\t| denoiser : ', denoiser_path, '\t| PSNR: ',psnr,'\t| SSIM: ',ssim)
+
 
 
 

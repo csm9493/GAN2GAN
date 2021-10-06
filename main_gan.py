@@ -7,7 +7,10 @@ import random
        
 parser = argparse.ArgumentParser(description='Training Generative Models')
 parser.add_argument('--dataset', type=str, choices=['WF_avg1','WF_avg2','WF_avg4','WF_avg8','WF_avg16', 
-                                                    'Dose25', 'Dose50', 'Dose75', 'Dose100'], required=True)
+                                                    'Dose25', 'Dose50', 'Dose75', 'Dose100',
+                                                   'Gaussian_std15', 'Gaussian_std25', 'Gaussian_std30', 'Gaussian_std50',
+                                                   'Mixture_s15', 'Mixture_s25', 'Mixture_s30', 'Mixture_s50',
+                                                   'Correlated_std15', 'Correlated_std25'], required=True)
 
 parser.add_argument('--seed', default=0, type=int)
 parser.add_argument('--lr-g', default=4e-4, type=float)
@@ -44,6 +47,21 @@ elif 'WF' in args.dataset:
 
     tr_data_z = 'GAN_train_96x96_FMD_'+str(args.dataset)+'_noisy_clean_patches.hdf5'
     tr_data_n = 'GAN_train_96x96_FMD_'+str(args.dataset)+'_noise_patches.hdf5'
+    
+elif 'Gaussian' in args.dataset:
+
+    tr_data_z = 'GAN_train_96x96_BSD_'+str(args.dataset)+'_noisy_clean_patches.hdf5'
+    tr_data_n = 'GAN_train_96x96_BSD_'+str(args.dataset)+'_noise_patches.hdf5'
+    
+elif 'Correlated' in args.dataset:
+
+    tr_data_z = 'GAN_train_96x96_BSD_'+str(args.dataset)+'_noisy_clean_patches.hdf5'
+    tr_data_n = 'GAN_train_96x96_BSD_'+str(args.dataset)+'_noise_patches.hdf5'
+    
+elif 'Mixture' in args.dataset:
+
+    tr_data_z = 'GAN_train_96x96_BSD_'+str(args.dataset)+'_noisy_clean_patches.hdf5'
+    tr_data_n = 'GAN_train_96x96_BSD_'+str(args.dataset)+'_noise_patches.hdf5'
     
     
 train_gan = Train_Generative_Models(args, tr_data_z, tr_data_n)

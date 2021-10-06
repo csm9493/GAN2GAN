@@ -4,8 +4,6 @@ import numpy as np
 import scipy.io as sio
 import math
 
-from PIL import Image
-from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 import h5py
@@ -13,9 +11,7 @@ import h5py
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torchvision.transforms.functional as tvF
 from torch.autograd import Variable
-from torch import autograd
 
 from .utils import Train_Dataset_G2G,Test_Dataset_G2G
 from .models import DnCNN, UNet, Generator
@@ -28,7 +24,41 @@ class GAN2GAN(object):
         self.iter = iter
         self.args = args
         
-        if 'WF' in args.dataset:
+        if 'Dose' in args.dataset:
+            
+            if self.iter == 0:
+                
+                g2_weight_dir = './weights/' + str(args.dataset) + '_g2.w'
+                self.denoiser = UNet(in_channels=args.input_channel,out_channels=args.input_channel, output_activation = 'sigmoid')
+                self.denoiser.cuda()
+                
+            else:
+
+                g1_weight_dir = './weights/' + str(args.dataset) + '_g1.w'
+                self.g1 = Generator()
+                self.g1.load_state_dict(torch.load(g1_weight_dir))
+                self.g1.cuda().eval()
+                
+                self.denoiser = UNet(in_channels=args.input_channel,out_channels=args.input_channel, output_activation = 'linear')
+                self.denoiser.cuda()
+
+                g2_weight_dir = './weights/' + str(args.dataset) + '_UNet_iter_'+str(iter-1)+'.w'
+                if self.iter == 1:
+                    self.g2 = UNet(in_channels=args.input_channel,out_channels=args.input_channel, output_activation = 'sigmoid')
+                else:
+                    self.g2 = UNet(in_channels=args.input_channel,out_channels=args.input_channel, output_activation = 'linear')
+                    
+                self.g2.load_state_dict(torch.load(g2_weight_dir))
+                self.g2.cuda().eval()
+                
+                if self.iter != 1:
+                    self.denoiser.load_state_dict(torch.load(g2_weight_dir))
+            
+            
+            self.save_file_name = args.dataset + '_UNet_iter_' + str(iter)
+            
+        else:
+            
             if self.iter == 0:
                 
                 g2_weight_dir = './weights/' + str(args.dataset) + '_g2.w'
@@ -62,38 +92,6 @@ class GAN2GAN(object):
             self.save_file_name = args.dataset + '_DnCNN_iter_' + str(iter)
             
             
-        else:
-            if self.iter == 0:
-                
-                g2_weight_dir = './weights/' + str(args.dataset) + '_g2.w'
-                self.denoiser = UNet(in_channels=args.input_channel,out_channels=args.input_channel, output_activation = 'sigmoid')
-                self.denoiser.cuda()
-                
-            else:
-
-                g1_weight_dir = './weights/' + str(args.dataset) + '_g1.w'
-                self.g1 = Generator()
-                self.g1.load_state_dict(torch.load(g1_weight_dir))
-                self.g1.cuda().eval()
-                
-                self.denoiser = UNet(in_channels=args.input_channel,out_channels=args.input_channel, output_activation = 'linear')
-                self.denoiser.cuda()
-
-                g2_weight_dir = './weights/' + str(args.dataset) + '_UNet_iter_'+str(iter-1)+'.w'
-                if self.iter == 1:
-                    self.g2 = UNet(in_channels=args.input_channel,out_channels=args.input_channel, output_activation = 'sigmoid')
-                else:
-                    self.g2 = UNet(in_channels=args.input_channel,out_channels=args.input_channel, output_activation = 'linear')
-                    
-                self.g2.load_state_dict(torch.load(g2_weight_dir))
-                self.g2.cuda().eval()
-                
-                if self.iter != 1:
-                    self.denoiser.load_state_dict(torch.load(g2_weight_dir))
-            
-            
-            self.save_file_name = args.dataset + '_UNet_iter_' + str(iter)
-            
         self.mini_batch_size = args.mbs
         self.learning_rate = args.lr
         self.epochs = args.ep
@@ -106,6 +104,7 @@ class GAN2GAN(object):
             print ('epochs : ',self.epochs )
             print ('drop_ep : ',self.drop_ep )
             print ('crop_size : ',self.crop_size)
+            print ('total_iter : ',args.iter)
 
         _transforms_tr = [ transforms.RandomHorizontalFlip(),
                         transforms.RandomVerticalFlip(),
@@ -179,7 +178,7 @@ class GAN2GAN(object):
 
                 source = source.cuda()
                 target = target.cuda()
-
+                
                 # Denoise
                 source_denoised = self.denoiser(source)
 
@@ -190,10 +189,6 @@ class GAN2GAN(object):
                 target = target.cpu().numpy()
                 source_denoised = source_denoised.cpu().numpy()
 
-#                 if 'Dose' in self.te_data_dir:
-#                     source_denoised = np.clip(source_denoised, 0, 1)
-#                     target = np.clip(target, 0, 2)
-#                 else:
                 source_denoised = np.clip(source_denoised, 0, 1)
                 target = np.clip(target, 0, 1)
                     

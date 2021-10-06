@@ -19,14 +19,14 @@ class Train_Generative_Models():
         self.c1 = Critic(args.input_channel)
         self.c2 = Critic(args.input_channel)
         
-        if 'WF' in args.dataset:
-            print ('use DnCNN for g1 and g3')
-            self.g2 = DnCNN(channels=1, num_of_layers=15,output_type='sigmoid')
-            self.g3 = DnCNN(channels=1,output_type='linear')
-        else:
-            print ('use UNet for g1 and g3')
+        if 'Dose' in args.dataset:
+            print ('use UNet for g2 and g3')
             self.g2 = UNet(in_channels=args.input_channel,out_channels=args.input_channel, output_activation = 'sigmoid')
             self.g3 = UNet(in_channels=args.input_channel,out_channels=args.input_channel, output_activation = 'linear')
+        else:
+            print ('use DnCNN for g2 and g3')
+            self.g2 = DnCNN(channels=1, num_of_layers=15,output_type='sigmoid')
+            self.g3 = DnCNN(channels=1,output_type='linear')
         
         self.criterion_L1 = torch.nn.L1Loss()
         

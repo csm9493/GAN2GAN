@@ -1,8 +1,4 @@
-from visdom import Visdom
-import sys
 import random
-import time
-import datetime
 import numpy as np
 import scipy.io as sio
 
@@ -14,7 +10,6 @@ from torch.autograd import Variable
 import h5py
 import random
 import torch
-import pywt
 from sklearn.feature_extraction import image
 
 class Train_Dataset_GAN(Dataset):
@@ -144,7 +139,7 @@ class Train_Dataset_G2G():
 
                 source = z_hat[0].view(1,self.crop_size,self.crop_size).detach()
                 target = z_hat[1].view(1,self.crop_size,self.crop_size).detach()
-
+                
             return source, target
 
 
@@ -171,11 +166,11 @@ class Test_Dataset_G2G():
         # Load PIL image
         
         if 'Dose' in   self.te_data_dir:
-            source = Image.fromarray((np.clip(self.clean_arr[index,:,:]/0.4, 0, 2)))
-            target = Image.fromarray((np.clip(self.noisy_arr[index,:,:]/0.4, 0, 2)))
+            source = Image.fromarray((np.clip(self.noisy_arr[index,:,:]/0.4, 0, 2)))
+            target = Image.fromarray((np.clip(self.clean_arr[index,:,:]/0.4, 0, 2)))
         else:
-            source = Image.fromarray((self.clean_arr[index,:,:]))
-            target = Image.fromarray((self.noisy_arr[index,:,:]))
+            source = Image.fromarray((self.noisy_arr[index,:,:]))
+            target = Image.fromarray((self.clean_arr[index,:,:]))
             
         if self.transform:
             source = self.transform(source)
