@@ -41,21 +41,6 @@ elif 'WF' in args.dataset:
     
     tr_data = 'G2G_train_120x120_FMD_'+str(args.dataset)+'.hdf5'
     te_data = 'FMD_'+str(args.dataset)+'_test.hdf5'
-        
-elif 'Gaussian' in args.dataset:
-    
-    tr_data = 'G2G_train_120x120_BSD_'+str(args.dataset)+'.hdf5'
-    te_data = 'BSD_'+str(args.dataset)+'_test.hdf5'
-        
-elif 'Correlated' in args.dataset:
-    
-    tr_data = 'G2G_train_120x120_BSD_'+str(args.dataset)+'.hdf5'
-    te_data = 'BSD_'+str(args.dataset)+'_test.hdf5'
-        
-elif 'Mixture' in args.dataset:
-    
-    tr_data = 'G2G_train_120x120_BSD_'+str(args.dataset)+'.hdf5'
-    te_data = 'BSD_'+str(args.dataset)+'_test.hdf5'
     
     
 for i in range(args.iter+1):
