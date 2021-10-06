@@ -48,21 +48,6 @@ elif 'WF' in args.dataset:
     tr_data_z = 'GAN_train_96x96_FMD_'+str(args.dataset)+'_noisy_clean_patches.hdf5'
     tr_data_n = 'GAN_train_96x96_FMD_'+str(args.dataset)+'_noise_patches.hdf5'
     
-elif 'Gaussian' in args.dataset:
-
-    tr_data_z = 'GAN_train_96x96_BSD_'+str(args.dataset)+'_noisy_clean_patches.hdf5'
-    tr_data_n = 'GAN_train_96x96_BSD_'+str(args.dataset)+'_noise_patches.hdf5'
-    
-elif 'Correlated' in args.dataset:
-
-    tr_data_z = 'GAN_train_96x96_BSD_'+str(args.dataset)+'_noisy_clean_patches.hdf5'
-    tr_data_n = 'GAN_train_96x96_BSD_'+str(args.dataset)+'_noise_patches.hdf5'
-    
-elif 'Mixture' in args.dataset:
-
-    tr_data_z = 'GAN_train_96x96_BSD_'+str(args.dataset)+'_noisy_clean_patches.hdf5'
-    tr_data_n = 'GAN_train_96x96_BSD_'+str(args.dataset)+'_noise_patches.hdf5'
-    
     
 train_gan = Train_Generative_Models(args, tr_data_z, tr_data_n)
 train_gan.train(args)
