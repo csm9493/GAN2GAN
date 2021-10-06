@@ -7,10 +7,7 @@ import random
        
 parser = argparse.ArgumentParser(description='Training GAN2GAN')
 parser.add_argument('--dataset', type=str, choices=['WF_avg1','WF_avg2','WF_avg4','WF_avg8','WF_avg16', 
-                                                    'Dose25', 'Dose50', 'Dose75', 'Dose100',
-                                                   'Gaussian_std15', 'Gaussian_std25', 'Gaussian_std30', 'Gaussian_std50',
-                                                   'Mixture_s15', 'Mixture_s25', 'Mixture_s30', 'Mixture_s50',
-                                                   'Correlated_std15', 'Correlated_std25'], required=True)
+                                                    'Dose25', 'Dose50', 'Dose75', 'Dose100',], required=True)
 
 parser.add_argument('--seed', default=0, type=int)
 parser.add_argument('--lr', default=0.001, type=float)
