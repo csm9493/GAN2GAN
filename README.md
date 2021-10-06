@@ -90,7 +90,7 @@ $ mkdir pretrained_weights weights
 
 ### 3. What is the proper number of iterations for GAN2GAN?
 
-: We emprically found that 'iter = 3' achieves the best results in various datasets and additional iterations for GAN2GAN achieved the more improved performance only in WF.
+: We emprically found that 'iter = 3' achieves the best results in various datasets and additional iterations for GAN2GAN only helps to improve the performance of WF.
 
 ## Citation
 
