@@ -8,7 +8,7 @@ The official code of GAN2GAN: Generative Noise Learning for Blind Denoising with
 
 ```
 $ pip install -r requirements.txt
-$ mkdir data pretrained_weights weights
+$ mkdir pretrained_weights weights
 ```
 
 ### 2. Prepare Datasets
