@@ -30,6 +30,7 @@ class GAN2GAN(object):
                 
                 g2_weight_dir = './weights/' + str(args.dataset) + '_g2.w'
                 self.denoiser = UNet(in_channels=args.input_channel,out_channels=args.input_channel, output_activation = 'sigmoid')
+                self.denoiser.load_state_dict(torch.load(g2_weight_dir))
                 self.denoiser.cuda()
                 
             else:
