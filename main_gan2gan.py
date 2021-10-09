@@ -18,6 +18,7 @@ parser.add_argument('--iter', default=3, type=int)
 parser.add_argument('--patch-size', default=64, type=int)
 parser.add_argument('--input-channel', default=1, type=int)
 parser.add_argument('--print-only-final-ep', action='store_true')
+parser.add_argument('--save-last-ep', action='store_true')
 parser.add_argument('--debug', action='store_true')
 
 args = parser.parse_args()

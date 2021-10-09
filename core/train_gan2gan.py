@@ -156,10 +156,7 @@ class GAN2GAN(object):
         
     def save_model(self):
 
-        if 'WF' in self.tr_data_dir:
-            torch.save(self.denoiser.state_dict(), './weights/'+self.save_file_name + '.w')
-        else:
-            torch.save(self.denoiser.state_dict(), './weights/'+self.save_file_name + '.w')
+        torch.save(self.denoiser.state_dict(), './weights/'+self.save_file_name + '.w')
             
         return
     
@@ -205,10 +202,15 @@ class GAN2GAN(object):
         mean_psnr = np.mean(psnr_arr)
         mean_ssim = np.mean(ssim_arr)
         
-        if self.best_psnr <= mean_psnr:
-            self.best_psnr = mean_psnr
+        if self.args.save_last_ep:
+            self.save_model()
             self.denoised_img_arr = denoised_img_arr.copy()
-            
+        else:
+            if self.best_psnr <= mean_psnr:
+                self.best_psnr = mean_psnr
+                self.denoised_img_arr = denoised_img_arr.copy()
+                self.save_model()
+        
         return mean_loss, mean_psnr, mean_ssim
     
     def after_epoch(self, mean_tr_loss, epoch):
@@ -226,7 +228,6 @@ class GAN2GAN(object):
                 print ('G2G Iter : ', self.iter, ' | EPOCH {:d} / {:d}'.format(epoch + 1, self.epochs),'| LR : ', self.optim.param_groups[0]['lr'], '| Tr loss : ', round(mean_tr_loss,4), '| Test loss : ', round(mean_te_loss,4), '| PSNR : ', round(mean_psnr,2), '| SSIM : ', round(mean_ssim,4)) 
         else:
             print ('G2G Iter : ', self.iter, ' | EPOCH {:d} / {:d}'.format(epoch + 1, self.epochs),'| LR : ', self.optim.param_groups[0]['lr'], '| Tr loss : ', round(mean_tr_loss,4), '| Test loss : ', round(mean_te_loss,4), '| PSNR : ', round(mean_psnr,2), '| SSIM : ', round(mean_ssim,4)) 
-        self.save_model()
             
     def train(self, args):
         """Trains denoiser on training set."""
