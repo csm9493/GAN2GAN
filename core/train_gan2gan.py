@@ -154,13 +154,13 @@ class GAN2GAN(object):
         
         return test_SSIM
         
-    def save_model(self):
+    def save_model(self, denoiser):
 
-        torch.save(self.denoiser.state_dict(), './weights/'+self.save_file_name + '.w')
+        torch.save(denoiser.state_dict(), './weights/'+self.save_file_name + '.w')
             
         return
     
-    def eval(self):
+    def eval(self, g2=None):
         """Evaluates denoiser on validation set."""
 
         psnr_arr = []
@@ -168,7 +168,12 @@ class GAN2GAN(object):
         loss_arr = []
         denoised_img_arr = []
         
-        self.denoiser.eval()
+        if g2 == None:
+            denoiser = self.denoiser
+        else:
+            denoiser = g2
+        
+        denoiser.eval()
 
         with torch.no_grad():
 
@@ -178,7 +183,7 @@ class GAN2GAN(object):
                 target = target.cuda()
                 
                 # Denoise
-                source_denoised = self.denoiser(source)
+                source_denoised = denoiser(source)
 
                 # Update loss
                 loss = self.loss(source_denoised, target)
@@ -203,13 +208,13 @@ class GAN2GAN(object):
         mean_ssim = np.mean(ssim_arr)
         
         if self.args.save_last_ep:
-            self.save_model()
+            self.save_model(denoiser)
             self.denoised_img_arr = denoised_img_arr.copy()
         else:
             if self.best_psnr <= mean_psnr:
                 self.best_psnr = mean_psnr
                 self.denoised_img_arr = denoised_img_arr.copy()
-                self.save_model()
+                self.save_model(denoiser)
         
         return mean_loss, mean_psnr, mean_ssim
     
@@ -244,6 +249,11 @@ class GAN2GAN(object):
             for epoch in range(self.epochs):
                 
                 self.denoiser.train()
+                
+                #reset self.best_psnr to the psnr of g2
+                if epoch == 0 and self.args.save_last_ep == False:
+                    _, _, _ = self.eval(self.g2)
+                
                 tr_loss = []
 
                 for batch_idx, (source, target) in enumerate(self.tr_data_loader):
@@ -271,8 +281,4 @@ class GAN2GAN(object):
                 sio.savemat('./result_data/'+self.save_file_name + '_result',{'tr_loss_arr':self.tr_loss_arr, 'te_loss_arr':self.te_loss_arr, 
                                                               'psnr_arr':self.psnr_arr, 'ssim_arr':self.ssim_arr, 'denoised_img_arr':self.denoised_img_arr})
                 
-                if args.debug:
-                    break
-                
-
 
