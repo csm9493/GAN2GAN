@@ -125,6 +125,7 @@ class GAN2GAN(object):
         self.te_data_loader = DataLoader(te_data_loader, batch_size=self.mini_batch_size//4, shuffle=False, num_workers=0, drop_last=False)
 
         self.psnr_arr = []
+        self.best_psnr_arr = []
         self.ssim_arr = []
         self.denoised_img_arr = []
         self.te_loss_arr = []
@@ -224,6 +225,7 @@ class GAN2GAN(object):
         mean_te_loss, mean_psnr, mean_ssim = self.eval()
 
         self.psnr_arr.append(mean_psnr)
+        self.best_psnr_arr.append(self.best_psnr)
         self.ssim_arr.append(mean_ssim)
         self.te_loss_arr.append(mean_te_loss)
         self.tr_loss_arr.append(mean_tr_loss)
@@ -243,7 +245,7 @@ class GAN2GAN(object):
             self.after_epoch(0, self.epochs-1)   
             
             sio.savemat('./result_data/'+self.save_file_name + '_result',{'tr_loss_arr':self.tr_loss_arr, 'te_loss_arr':self.te_loss_arr, 
-                                                                          'psnr_arr':self.psnr_arr, 'ssim_arr':self.ssim_arr, 'denoised_img_arr':self.denoised_img_arr})
+                                                                          'psnr_arr':self.psnr_arr, 'ssim_arr':self.ssim_arr, 'denoised_img_arr':self.denoised_img_arr, 'best_psnr_arr':self.best_psnr_arr})
         else:
             
             for epoch in range(self.epochs):
@@ -279,6 +281,6 @@ class GAN2GAN(object):
                 self.after_epoch(mean_tr_loss, epoch)    
 
                 sio.savemat('./result_data/'+self.save_file_name + '_result',{'tr_loss_arr':self.tr_loss_arr, 'te_loss_arr':self.te_loss_arr, 
-                                                              'psnr_arr':self.psnr_arr, 'ssim_arr':self.ssim_arr, 'denoised_img_arr':self.denoised_img_arr})
+                                                              'psnr_arr':self.psnr_arr, 'ssim_arr':self.ssim_arr, 'denoised_img_arr':self.denoised_img_arr, 'best_psnr_arr':self.best_psnr_arr})
                 
 
