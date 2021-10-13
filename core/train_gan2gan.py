@@ -278,7 +278,9 @@ class GAN2GAN(object):
                         break
 
                 mean_tr_loss = np.mean(tr_loss)
-                self.after_epoch(mean_tr_loss, epoch)    
+                self.after_epoch(mean_tr_loss, epoch)
+                
+                self.scheduler.step()
 
                 sio.savemat('./result_data/'+self.save_file_name + '_result',{'tr_loss_arr':self.tr_loss_arr, 'te_loss_arr':self.te_loss_arr, 
                                                               'psnr_arr':self.psnr_arr, 'ssim_arr':self.ssim_arr, 'denoised_img_arr':self.denoised_img_arr, 'best_psnr_arr':self.best_psnr_arr})
